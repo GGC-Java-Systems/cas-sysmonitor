@@ -83,7 +83,7 @@ public class DisPendingBills implements iSystemMonitor {
                 + " , CONCAT(h.sBranchNm, ' : ',d.sPayeeNme, '-' , e.sDescript ,' - ',"
                 + "     ELT(a.nBillMnth, 'January','February','March','April','May','June','July','August','September','October','November','December') "
                 + " , '- ', b.nDueDayxx) sDisplayNme" 
-                + " , 'Payment Request - New' sToolTipx" 
+                + " , 'Payment Requests - New' sToolTipx" 
                 + " FROM Recurring_Expense_Payment_Monitor a "
                 + " LEFT JOIN Recurring_Expense_Schedule b ON a.sRecurrNo = b.sRecurrNo AND b.cRecdStat = '1'  "
                 + " LEFT JOIN Recurring_Expense c ON c.sRecurrID = b.sRecurrID AND c.cRecdStat = '1'           "
@@ -94,16 +94,16 @@ public class DisPendingBills implements iSystemMonitor {
                 + " LEFT JOIN Branch h ON h.sBranchCd = b.sBranchCd       " ;
          //she ->Status to be change nalang after finalization
         
-        if(!poDriver.isMainOffice()){
-            lsSQL = MiscUtil.addCondition(lsSQL, " (sBatchNox IS NULL OR TRIM(sBatchNox) = '') AND b.cAccntble = " + SQLUtil.toSQL("1")); //For Branch Only
-        } else {
+        if(poDriver.isMainOffice()){
             lsSQL = MiscUtil.addCondition(lsSQL, " (sBatchNox IS NULL OR TRIM(sBatchNox) = '') AND b.cAccntble != " + SQLUtil.toSQL("1")); //Except Branch
+        } else {
+            lsSQL = MiscUtil.addCondition(lsSQL, " (sBatchNox IS NULL OR TRIM(sBatchNox) = '') AND b.cAccntble = " + SQLUtil.toSQL("1") + " AND b.sBranchCd = "  + SQLUtil.toSQL(poDriver.getBranchCode())); //For Specific Branch Only
         }
         
         String lsFilterAll = "";
         String lsFilter;
      
-        //set filter by industry
+//        set filter by industry
         lsFilter = "";
         if (pasIndstCdx != null) {
             for (String lsValue : pasIndstCdx) {
