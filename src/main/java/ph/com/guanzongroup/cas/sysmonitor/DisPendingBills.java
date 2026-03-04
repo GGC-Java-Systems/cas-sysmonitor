@@ -123,7 +123,7 @@ public class DisPendingBills implements iSystemMonitor {
         lsSQL = lsSQL + " GROUP BY b.sPayeeIDx, b.sBranchCd, c.sPrtclrID, b.nDueDayxx ";
         
         try {
-            System.out.println("Monitoring Query is = " + lsSQL);
+//            System.out.println("Monitoring Query is = " + lsSQL);
             ResultSet loRS = poDriver.executeQuery(lsSQL);
             
             poJAData = MiscUtil.RS2JSON(loRS);
