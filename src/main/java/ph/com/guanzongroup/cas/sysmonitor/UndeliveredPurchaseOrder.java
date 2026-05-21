@@ -61,6 +61,7 @@ public class UndeliveredPurchaseOrder implements iSystemMonitor {
 
     @Override
     public JSONObject processMonitor() {
+        pasBranchCD = new String[]{poDriver.getBranchCode()};
         String lsSQL;
         JSONObject oRes = new JSONObject();
 
@@ -88,7 +89,6 @@ public class UndeliveredPurchaseOrder implements iSystemMonitor {
 
         String lsFilterAll = "";
         String lsFilter;
-
         //set filter by industry
         lsFilter = "";
         if (pasIndstCdx != null) {
