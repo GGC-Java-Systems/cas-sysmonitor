@@ -131,7 +131,7 @@ public class UndeliveredPurchaseOrder implements iSystemMonitor {
             }
         }
         if (!lsFilter.isEmpty()) {
-            lsFilterAll += " AND a.sBranchCD IN(" + lsFilter.substring(2) + ")";
+            lsFilterAll += " AND LEFT(a.sTransNox,4) IN(" + lsFilter.substring(2) + ")";
         }
 
         if (!lsFilterAll.isEmpty()) {

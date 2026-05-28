@@ -89,16 +89,16 @@ public class SystemMonitorMenu {
             lsFilterAll += " AND b.sCategrCd IN(" + lsFilter.substring(2) + ")";
         }
 
-        //set filter by company
-        lsFilter = "";
-        if (pasCompnyID != null) {
-            for (String lsValue : pasCompnyID) {
-                lsFilter += ", " + SQLUtil.toSQL(lsValue);
-            }
-        }
-        if (!lsFilter.isEmpty()) {
-            lsFilterAll += " AND a.sCompnyID IN(" + lsFilter.substring(2) + ")";
-        }
+//        //set filter by company
+//        lsFilter = "";
+//        if (pasCompnyID != null) {
+//            for (String lsValue : pasCompnyID) {
+//                lsFilter += ", " + SQLUtil.toSQL(lsValue);
+//            }
+//        }
+//        if (!lsFilter.isEmpty()) {
+//            lsFilterAll += " AND a.sCompnyID IN(" + lsFilter.substring(2) + ")";
+//        }
 
         //set filter by branch
         lsFilter = "";

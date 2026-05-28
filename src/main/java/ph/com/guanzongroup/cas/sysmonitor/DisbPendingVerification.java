@@ -85,43 +85,43 @@ public class DisbPendingVerification implements iSystemMonitor {
      
         //set filter by industry
         lsFilter = "";
-        if (pasIndstCdx != null) {
-            for (String lsValue : pasIndstCdx) {
-                lsFilter += ", " + SQLUtil.toSQL(lsValue);
-            }
-        }
-        if (!lsFilter.isEmpty()) {
-            lsFilterAll += " AND a.sIndstCdx IN(" + lsFilter.substring(2) + ")";
-        }
-        //set filter by category
-        lsFilter = "";
-        if (pasCategrCd != null) {
-            for (String lsValue : pasCategrCd) {
-                lsFilter += ", " + SQLUtil.toSQL(lsValue);
-            }
-        }
-        if (!lsFilter.isEmpty()) {
-            lsFilterAll += " AND a.sCategrCd IN(" + lsFilter.substring(2) + ")";
-        }
-
-        //set filter by company
-        lsFilter = "";
-        if (pasCompnyID != null) {
-            for (String lsValue : pasCompnyID) {
-                lsFilter += ", " + SQLUtil.toSQL(lsValue);
-            }
-        }
-        if (!lsFilter.isEmpty()) {
-            lsFilterAll += " AND a.sCompnyID IN(" + lsFilter.substring(2) + ")";
-        }
-
-        //set filter by branch
-        lsFilter = "";
-        if (pasBranchCD != null) {
-            for (String lsValue : pasBranchCD) {
-                lsFilter += ", " + SQLUtil.toSQL(lsValue);
-            }
-        }
+//        if (pasIndstCdx != null) {
+//            for (String lsValue : pasIndstCdx) {
+//                lsFilter += ", " + SQLUtil.toSQL(lsValue);
+//            }
+//        }
+//        if (!lsFilter.isEmpty()) {
+//            lsFilterAll += " AND a.sIndstCdx IN(" + lsFilter.substring(2) + ")";
+//        }
+//        //set filter by category
+//        lsFilter = "";
+//        if (pasCategrCd != null) {
+//            for (String lsValue : pasCategrCd) {
+//                lsFilter += ", " + SQLUtil.toSQL(lsValue);
+//            }
+//        }
+//        if (!lsFilter.isEmpty()) {
+//            lsFilterAll += " AND a.sCategrCd IN(" + lsFilter.substring(2) + ")";
+//        }
+//
+//        //set filter by company
+//        lsFilter = "";
+//        if (pasCompnyID != null) {
+//            for (String lsValue : pasCompnyID) {
+//                lsFilter += ", " + SQLUtil.toSQL(lsValue);
+//            }
+//        }
+//        if (!lsFilter.isEmpty()) {
+//            lsFilterAll += " AND a.sCompnyID IN(" + lsFilter.substring(2) + ")";
+//        }
+//
+//        //set filter by branch
+//        lsFilter = "";
+//        if (pasBranchCD != null) {
+//            for (String lsValue : pasBranchCD) {
+//                lsFilter += ", " + SQLUtil.toSQL(lsValue);
+//            }
+//        }
         if (!lsFilter.isEmpty()) {
             lsFilterAll += " AND a.sBranchCD IN(" + lsFilter.substring(2) + ")";
         }

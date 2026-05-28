@@ -64,7 +64,6 @@ public class DisPendingBills implements iSystemMonitor {
     public JSONObject processMonitor() {
         String lsSQL;
         JSONObject oRes = new JSONObject();
-        
         lsSQL = " SELECT        "
                 + "   a.sTransNox "
                 + " , a.sBatchNox "
@@ -105,16 +104,16 @@ public class DisPendingBills implements iSystemMonitor {
         String lsFilterAll = "";
         String lsFilter;
      
-//        set filter by industry
-        lsFilter = "";
-        if (pasIndstCdx != null) { //Never pang na lagyan ito pasIndstCdx ng value; as per sir maynard kasi ni as is palang muna yung pag filter dapat mag filter pa sa lahat ng industry;
-            for (String lsValue : pasIndstCdx) {
-                lsFilter += ", " + SQLUtil.toSQL(lsValue);
-            }
-        }
-        if (!lsFilter.isEmpty()) {
-            lsFilterAll += " AND c.sIndstCdx IN(" + lsFilter.substring(2) + ")";
-        }
+////        set filter by industry
+//        lsFilter = "";
+//        if (pasIndstCdx != null) { //Never pang na lagyan ito pasIndstCdx ng value; as per sir maynard kasi ni as is palang muna yung pag filter dapat mag filter pa sa lahat ng industry;
+//            for (String lsValue : pasIndstCdx) {
+//                lsFilter += ", " + SQLUtil.toSQL(lsValue);
+//            }
+//        }
+//        if (!lsFilter.isEmpty()) {
+//            lsFilterAll += " AND c.sIndstCdx IN(" + lsFilter.substring(2) + ")";
+//        }
 
         if (!lsFilterAll.isEmpty()) {
             lsSQL += lsFilterAll;

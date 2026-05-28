@@ -65,25 +65,25 @@ public class UnSettledPOReturn implements iSystemMonitor {
         JSONObject oRes = new JSONObject();
 
         pasBranchCD = new String[]{poDriver.getBranchCode()};
-        lsSQL = "SELECT" + 
-                       "  a.sTransNox" + 
-                       ", a.dTransact" + 
-                       ", c.sCompnyNm" + 
-                       ", b.sBranchNm" + 
-                       ", d.sCompnyNm" + 
-                       ", a.sIndstCdx" + 
-                       ", a.sCategrCd" + 
-                       ", a.cProcessd" +
-                       ", a.cTranStat" +
-                       ", CONCAT(a.sTransNox ,' - ',a.dTransact) sDisplayNme" +
-                       ", CONCAT(b.`sBranchNm`, ' - #',a.`sReferNox`) sToolTipx" +
-               " FROM PO_Return_Master a" +
-                    " LEFT JOIN Branch b ON a.sBranchCd = b.sBranchCD" +
-                    " LEFT JOIN Client_Master c ON a.sSupplier = c.sClientID" +
-                    " LEFT JOIN Company d ON a.sCompnyID = d.sCompnyID" +
-               " WHERE a.cTranStat IN ('2')" +
-               " AND a.cProcessd IN ('0', '1')";
-        
+        lsSQL = "SELECT"
+                + "  a.sTransNox"
+                + ", a.dTransact"
+                + ", c.sCompnyNm"
+                + ", b.sBranchNm"
+                + ", d.sCompnyNm"
+                + ", a.sIndstCdx"
+                + ", a.sCategrCd"
+                + ", a.cProcessd"
+                + ", a.cTranStat"
+                + ", CONCAT(a.sTransNox ,' - ',a.dTransact) sDisplayNme"
+                + ", CONCAT(b.`sBranchNm`, ' - #',a.`sReferNox`) sToolTipx"
+                + " FROM PO_Return_Master a"
+                + " LEFT JOIN Branch b ON a.sBranchCd = b.sBranchCD"
+                + " LEFT JOIN Client_Master c ON a.sSupplier = c.sClientID"
+                + " LEFT JOIN Company d ON a.sCompnyID = d.sCompnyID"
+                + " WHERE a.cTranStat IN ('2')"
+                + " AND a.cProcessd IN ('0', '1')";
+
         String lsFilterAll = "";
         String lsFilter;
 
@@ -106,7 +106,7 @@ public class UnSettledPOReturn implements iSystemMonitor {
             }
         }
         if (!lsFilter.isEmpty()) {
-            lsFilterAll += " AND a.sCategrCd IN(" + lsFilter.substring(2) + ")";
+            lsFilterAll += " AND LEFT(a.sTransNox,4) IN(" + lsFilter.substring(2) + ")";
         }
 
         //set filter by company
