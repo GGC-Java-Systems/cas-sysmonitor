@@ -89,6 +89,7 @@ public class UndeliveredPurchaseOrder implements iSystemMonitor {
 
         String lsFilterAll = "";
         String lsFilter;
+
         //set filter by industry
         lsFilter = "";
         if (pasIndstCdx != null) {
@@ -139,6 +140,7 @@ public class UndeliveredPurchaseOrder implements iSystemMonitor {
 
         try {
 //            System.out.println("Monitoring Query is = " + lsSQL);
+            lsSQL = lsSQL + " ORDER BY a.dTransact ASC ";
             ResultSet loRS = poDriver.executeQuery(lsSQL);
 
             poJAData = MiscUtil.RS2JSON(loRS);

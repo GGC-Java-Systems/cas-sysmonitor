@@ -64,6 +64,7 @@ public class UnSettledPOReturn implements iSystemMonitor {
         String lsSQL;
         JSONObject oRes = new JSONObject();
 
+        pasBranchCD = new String[]{poDriver.getBranchCode()};
         lsSQL = "SELECT" + 
                        "  a.sTransNox" + 
                        ", a.dTransact" + 
@@ -136,6 +137,7 @@ public class UnSettledPOReturn implements iSystemMonitor {
 
         try {
 //            System.out.println("Monitoring Query is = " + lsSQL);
+            lsSQL = lsSQL + " ORDER BY a.dTransact ASC ";
             ResultSet loRS = poDriver.executeQuery(lsSQL);
 
             poJAData = MiscUtil.RS2JSON(loRS);
