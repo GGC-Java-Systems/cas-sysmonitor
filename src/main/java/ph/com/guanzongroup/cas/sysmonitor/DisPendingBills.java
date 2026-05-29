@@ -74,6 +74,8 @@ public class DisPendingBills implements iSystemMonitor {
                 + " , b.nDueDayxx "
                 + " , b.nAmountxx "
                 + " , g.sIndstCdx "
+                + " , b.cAccntble "
+                + " , h.sCompnyID "
                 + " , d.sPayeeNme AS xPayeeNme "
                 + " , e.sDescript AS xParticlr "
                 + " , g.sDescript AS xIndustry "
@@ -81,7 +83,8 @@ public class DisPendingBills implements iSystemMonitor {
                 + " , f.sCompnyNm AS xEmployNm "
                 + " , SUM(b.nAmountxx) AS xAmountxx " 
                 + " , GROUP_CONCAT(a.sTransNox) AS sTransNox"
-                + " , CONCAT(h.sBranchNm, ' : ',d.sPayeeNme, '-' , e.sDescript ,' - ',"
+//                + " , CONCAT(h.sBranchNm, ' : ',d.sPayeeNme, '-' , e.sDescript ,' - '," // Removed branch in display since list is not grouped per branch - Arsiela 05-28-2026 01:38 PM
+                + " , CONCAT(d.sPayeeNme, ' : ' , e.sDescript ,' - ',"
                 + "     ELT(a.nBillMnth, 'January','February','March','April','May','June','July','August','September','October','November','December') "
                 + " , '- ', b.nDueDayxx) sDisplayNme" 
                 + " , 'Payment Requests - New' sToolTipx" 
@@ -92,13 +95,15 @@ public class DisPendingBills implements iSystemMonitor {
                 + " LEFT JOIN Particular e ON e.sPrtclrID = c.sPrtclrID    "
                 + " LEFT JOIN Client_Master f ON f.sClientID = b.sEmployID "
                 + " LEFT JOIN Industry g ON g.sIndstCdx = c.sIndstCdx      "
-                + " LEFT JOIN Branch h ON h.sBranchCd = b.sBranchCd       " ;
+                + " LEFT JOIN Branch h ON h.sBranchCd = b.sBranchCd       " 
+                + " LEFT JOIN Company i ON i.sCompnyID = h.sCompnyID       " ;
          //she ->Status to be change nalang after finalization
         
+        lsSQL = MiscUtil.addCondition(lsSQL, " (a.sBatchNox IS NULL OR TRIM(a.sBatchNox) = '') AND b.cExcluded = " + SQLUtil.toSQL(Logical.NO));
         if(poDriver.isMainOffice()){
-            lsSQL = MiscUtil.addCondition(lsSQL, " (a.sBatchNox IS NULL OR TRIM(a.sBatchNox) = '') AND b.cExcluded = " + SQLUtil.toSQL(Logical.NO) + " AND b.cAccntble != " + SQLUtil.toSQL(Logical.YES)); //Except Branch
+            lsSQL = lsSQL + " AND b.cAccntble != " + SQLUtil.toSQL(Logical.YES); //Except Accountable is equal to Branch : 1
         } else {
-            lsSQL = MiscUtil.addCondition(lsSQL, " (a.sBatchNox IS NULL OR TRIM(a.sBatchNox) = '') AND b.cExcluded = " + SQLUtil.toSQL(Logical.NO) + "AND b.sBranchCd = "  + SQLUtil.toSQL(poDriver.getBranchCode())); //For Specific Branch Only
+            lsSQL = lsSQL + " AND b.sBranchCd = "  + SQLUtil.toSQL(poDriver.getBranchCode()); //For Specific Branch Only
         }
         
         String lsFilterAll = "";
@@ -115,11 +120,24 @@ public class DisPendingBills implements iSystemMonitor {
 //            lsFilterAll += " AND c.sIndstCdx IN(" + lsFilter.substring(2) + ")";
 //        }
 
+        lsFilter = "";
+        
+        //Filter by Company based of current logged in; filter by branch company - request by ma'am she : Arsiela 05-28-2026 
+        if (pasCompnyID != null) {
+            for (String lsValue : pasCompnyID) {
+                lsFilter += ", " + SQLUtil.toSQL(lsValue);
+            }
+        }
+        if (!lsFilter.isEmpty()) {
+            lsFilterAll += " AND h.sCompnyID IN(" + lsFilter.substring(2) + ")";
+        }
+
         if (!lsFilterAll.isEmpty()) {
             lsSQL += lsFilterAll;
         }
         
-        lsSQL = lsSQL + " GROUP BY b.sPayeeIDx, b.sBranchCd, c.sPrtclrID, a.nBillMnth, b.nDueDayxx ";
+//        lsSQL = lsSQL + " GROUP BY b.sPayeeIDx, b.sBranchCd, c.sPrtclrID, a.nBillMnth, b.nDueDayxx ";
+        lsSQL = lsSQL + " GROUP BY h.sCompnyID, b.sPayeeIDx, b.cAccntble, b.nBillDayx "; //Changed group by according to ma'am she - Arsiela 05-28-206
         
         try {
 //            System.out.println("Monitoring Query is = " + lsSQL);
