@@ -66,7 +66,7 @@ public class DisPendingBills implements iSystemMonitor {
         String lsSQL;
         JSONObject oRes = new JSONObject();
 
-        //add validation 
+        //add validation GCO1 lang pwede
         if (!poDriver.getBranchCode().equalsIgnoreCase("GCO1")) {
             oRes.put("result", "Success");
             return oRes;

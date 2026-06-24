@@ -83,7 +83,6 @@ public class UndeliveredPurchaseOrder implements iSystemMonitor {
                 + " LEFT JOIN Client_Master c ON a.sSupplier = c.sClientID"
                 + " LEFT JOIN Company d ON a.sCompnyID = d.sCompnyID"
                 + " WHERE a.cTranStat IN ('5')"
-                + " AND b.nQuantity > (b.nReceived + b.nCancelld)"
                 + " AND a.cProcessd IN ('0', '1') "
                 + " AND sTransNox NOT IN(SELECT sOrderNox FROM PO_Receiving_Master a, "
                 + "`PO_Receiving_Detail` b"
