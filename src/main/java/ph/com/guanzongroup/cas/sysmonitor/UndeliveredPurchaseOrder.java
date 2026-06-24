@@ -142,7 +142,7 @@ public class UndeliveredPurchaseOrder implements iSystemMonitor {
 
         try {
 //            System.out.println("Monitoring Query is = " + lsSQL);
-            lsSQL = lsSQL + " ORDER BY a.dTransact ASC GROUP BY a.sTransNox";
+            lsSQL = lsSQL + " GROUP BY a.sTransNox ORDER BY a.dTransact ASC ";
             ResultSet loRS = poDriver.executeQuery(lsSQL);
 
             poJAData = MiscUtil.RS2JSON(loRS);
